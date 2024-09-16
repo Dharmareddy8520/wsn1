@@ -77,7 +77,6 @@ class WSN:
         cluster_x = int(node.x // self.cluster_size)
         cluster_y = int(node.y // self.cluster_size)
         cluster_index = cluster_y * (self.width // self.cluster_size) + cluster_x
-        print(f"Adding node {node.id} to cluster {cluster_index}")
         self.clusters[cluster_index].add_node(node)
 
     def elect_clusterheads(self):
@@ -122,14 +121,21 @@ def generate_random_node(id):
 
 def read_nodes_from_file(filename):
     nodes = []
-    with open(filename, 'r', encoding='utf-8') as f:
-        n = int(f.readline().strip())
-        for i in range(n):
-            try:
-                x, y, r, e, p = map(float, f.readline().strip().split())
-                nodes.append(Node(i, x, y, r, e, p))
-            except ValueError as ve:
-                print(f"Error reading line {i + 2}: {ve}")
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            n = int(f.readline().strip())
+            for i in range(n):
+                line = f.readline().strip()
+                try:
+                    x, y, r, e, p = map(float, line.split())
+                    nodes.append(Node(i, x, y, r, e, p))
+                except ValueError as ve:
+                    print(f"Error parsing line {i + 2}: {line}")
+                    print(f"ValueError: {ve}")
+    except FileNotFoundError:
+        print(f"File {filename} not found.")
+    except Exception as e:
+        print(f"An error occurred while reading the file: {e}")
     return nodes
 
 def write_network_to_file(filename, wsn):
@@ -145,7 +151,6 @@ def write_network_to_file(filename, wsn):
             f.write(f"  Clusterhead: {cluster.clusterhead.id if cluster.clusterhead else 'None'}\n")
 
 def main():
-    wsn = WSN(20, 20, 5)  # Initialize a 20x20 network with 5x5 clusters
 
     while True:
         print("\n1. Random mode")
@@ -154,10 +159,17 @@ def main():
         choice = input("Enter your choice: ")
 
         if choice == '1':
+            # Reinitialize WSN for Random mode
+            wsn = WSN(20, 20, 5)  # Initialize a 20x20 network with 5x5 clusters
             num_nodes = random.randint(10, 100)
             for i in range(num_nodes):
                 wsn.add_node(generate_random_node(i))
+            wsn.elect_clusterheads()
+            write_network_to_file('network_random.txt', wsn)  # Save random mode data to network_random.txt
+            print(f"\nRandom network information has been written to network_random.txt")
         elif choice == '2':
+            # Reinitialize WSN for User mode
+            wsn = WSN(20, 20, 5)  # Initialize a 20x20 network with 5x5 clusters
             nodes = read_nodes_from_file('input.txt')
             for node in nodes:
                 wsn.add_node(node)
