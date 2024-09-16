@@ -18,15 +18,16 @@ This project simulates the operation of a clustered Wireless Sensor Network (WSN
 
 The WSN simulation involves the following steps:
 
-1. Cluster Assignment: Each node is assigned to a predetermined cluster based on its coordinates.
+1. Cluster Assignment: Each node is assigned to a predetermined cluster based on its coordinates and some paraments such as x,y,r,e,p
 2. The program operates in two modes:
 
    1. Random Mode: The program generates a random number of nodes (between 10 and 100), assigns random characteristics (position, radio range, energy, and processing power), and simulates the network.
    2. User Mode: The program reads node characteristics from a file (input.txt) and simulates the network based on user-provided node details.
 
 3. Clusterhead Election: The node with the highest calculated score (based on radio range, energy, and processing power) is elected as the clusterhead for each cluster. In case of a tie, the node closest to the cluster center is chosen.
-
+   F = 0.4R + 0.4E + 0.2P
 4. Greedy Routing: Nodes route packets to the nearest neighbor within radio range that is closest to the destination node.
+   using euclidian distance
 
 5. Output to File: The network structure, including node details and cluster information, is written to an output file (network.txt or network_random.txt).
 
@@ -38,8 +39,7 @@ The WSN simulation involves the following steps:
 
 - `main.py`: The main script to run the WSN simulation.
 - `input.txt`: The input file containing node information.
-- `network.txt`: The output file containing the network and cluster information after running the simulation taking input from input.txt file
-- `network_random` :The output file containing the network and cluster information after running the simulation taking input from random generator
+- `network.txt`: The output file containing the network and cluster information after running the simulation
 
 ## How to Run
 

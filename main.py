@@ -165,7 +165,7 @@ def main():
             for i in range(num_nodes):
                 wsn.add_node(generate_random_node(i))
             wsn.elect_clusterheads()
-            write_network_to_file('network_random.txt', wsn)  # Save random mode data to network_random.txt
+            write_network_to_file('network.txt', wsn)  # Save random mode data to network_random.txt
             print(f"\nRandom network information has been written to network_random.txt")
         elif choice == '2':
             # Reinitialize WSN for User mode
