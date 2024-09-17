@@ -1,0 +1,15 @@
+3
+3.00 1.00 4.00 40.00 30.00
+2.00 7.00 5.00 99.00 55.00
+13.00 14.00 4.00 45.00 80.00
+
+Cluster Information:
+Cluster 0:
+  Nodes: 1
+  Clusterhead: 1
+Cluster 4:
+  Nodes: 2
+  Clusterhead: 2
+Cluster 10:
+  Nodes: 3
+  Clusterhead: 3
